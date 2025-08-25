@@ -73,6 +73,70 @@ Client-server chat applications are versatile tools that facilitate real-time co
 
 Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
 
+## PROGRAM:
+
+CLIENT:
+```
+import socket
+
+def client_program():
+    host = "127.0.0.1"   #
+    port = 5000
+
+    client_socket = socket.socket()
+    client_socket.connect((host, port))
+
+    message = input(" -> ")
+
+    while message.lower().strip() != 'bye':
+        client_socket.send(message.encode())
+        data = client_socket.recv(1024).decode()
+        print('Received from server: ' + data)
+        message = input(" -> ")
+
+    client_socket.close()
+
+if __name__ == '__main__':
+    client_program()
+```
+
+SERVER:
+```
+import socket
+
+def server_program():
+    host = "127.0.0.1"   # localhost (works better on Windows)
+    port = 5000
+
+    server_socket = socket.socket()
+    server_socket.bind((host, port))
+
+    server_socket.listen(2)
+    conn, address = server_socket.accept()
+    print("Connection from: " + str(address))
+    while True:
+        data = conn.recv(1024).decode()
+        if not data:
+            break
+        print("From connected user: " + str(data))
+        data = input(' -> ')
+        conn.send(data.encode())
+
+    conn.close()
+
+if __name__ == '__main__':
+    server_program()
+```
+
+## OUTPUT:
+
+<img width="806" height="438" alt="image" src="https://github.com/user-attachments/assets/d2157acf-d2f0-44eb-b01a-10ed9f5fdd54" />
+
+<img width="1037" height="526" alt="image" src="https://github.com/user-attachments/assets/40dabeeb-31d1-48c8-8374-f96ab0e7d97f" />
+
+
+
+
 
 ## Result:
 
